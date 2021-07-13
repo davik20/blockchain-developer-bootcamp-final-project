@@ -84,8 +84,8 @@ function VehicleItem(props) {
     }
     
       try {
-    let value = parseFloat(security) + parseInt(rentPerDay)
-    
+    let value = parseFloat(security) + parseFloat(rentPerDay)
+     console.log(parseFloat(security) )
     console.log(security, rentPerDay)
     console.log(value)
     alert(`You are about to pay ${value.toFixed(4)}Eth to rent this car`)
