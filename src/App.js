@@ -34,7 +34,7 @@ function App() {
           console.log(Rent.networks[id])
           const ropstenAddress = "0x4684e6478287Dd97B0Aa217911e2601A737a43Ca"
           const devAddress = Rent.networks[id].address;
-          const rent = new web3.eth.Contract(Rent.abi, devAddress )
+          const rent = new web3.eth.Contract(Rent.abi, ropstenAddress)
           setRentContract(rent)
 
 
