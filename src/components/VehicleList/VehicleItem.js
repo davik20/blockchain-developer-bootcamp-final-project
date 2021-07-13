@@ -84,9 +84,9 @@ function VehicleItem(props) {
     }
     
       try {
-    let value = parseInt(security) + parseInt(rentPerDay)
+    let value = parseFloat(security) + parseInt(rentPerDay)
     
-    
+    console.log(security, rentPerDay)
     console.log(value)
     alert(`You are about to pay ${value.toFixed(4)}Eth to rent this car`)
     const transactionHash  =  await rentContract.methods.takeRent(rentId, 1 ).send({from: account, value: toWei(value.toString()) }, async(err, txHash)=> {
