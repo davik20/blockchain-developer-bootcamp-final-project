@@ -67,6 +67,7 @@ const updateRent = async(e)=> {
 
     } catch (error) {
         console.log(error)
+        alert('Transaction Failed')
     }
        
 

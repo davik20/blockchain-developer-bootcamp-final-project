@@ -51,6 +51,7 @@ function VehicleItem(props) {
     } catch (error) {
         // alert(error.message)
         console.log(error)
+        alert('transaction failed');
     }
   }
 
@@ -87,7 +88,7 @@ function VehicleItem(props) {
     
     
     console.log(value)
-    alert(`You are about to pay ${value}Eth to rent this car`)
+    alert(`You are about to pay ${value.toFixed(4)}Eth to rent this car`)
     const transactionHash  =  await rentContract.methods.takeRent(rentId, 1 ).send({from: account, value: toWei(value.toString()) }, async(err, txHash)=> {
       toast(`Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`)
         
@@ -100,6 +101,8 @@ function VehicleItem(props) {
    
       } catch (error) {
         console.log(error)
+        alert('transaction failed');
+        
       }
 
   }
@@ -116,6 +119,7 @@ function VehicleItem(props) {
       // await addTransaction(transactionHash, "/", 'Vehicle returned successfully')
     } catch (error) {
       console.log(error)
+      alert('transaction failed');
     }
 
 
@@ -135,6 +139,7 @@ function VehicleItem(props) {
       
     } catch (error) {
       console.log(error)
+      alert('transaction failed');
     }
   }
   const removeFromMaintain = async (rentId) => {
@@ -151,6 +156,7 @@ function VehicleItem(props) {
 
     } catch (error) {
       console.log(error)
+      alert('transaction failed');
     }
   }
 
