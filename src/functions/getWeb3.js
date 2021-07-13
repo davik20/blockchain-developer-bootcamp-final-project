@@ -13,10 +13,10 @@ function getWeb3(){
       
         try {
             if(true){
-                const provider = new  HDWalletProvider(
-                    mnemonic,
-                    'https://ropsten.infura.io/v3/3ee5b26be9d9451b96c018232c629555'
-            )
+            //     const provider = new  HDWalletProvider(
+            //         mnemonic,
+            //         'https://ropsten.infura.io/v3/3ee5b26be9d9451b96c018232c629555'
+            // )
                 const web3 = new Web3(window.ethereum);
                 
                  resolve(web3)
