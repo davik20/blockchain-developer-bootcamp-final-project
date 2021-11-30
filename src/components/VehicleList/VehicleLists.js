@@ -10,7 +10,7 @@ function VehicleLists({ rentdetail, web3, rentContract, account }) {
     <div>
       {rentdetail.map((rentdetail) => (
         <div
-          onClick={() => history.push(`/detail/${rentdetail.rentId}`)}
+          onClick={() => history.push(`/blockchain-developer-bootcamp-final-project/detail/${rentdetail.rentId}`)}
           key={rentdetail.rentId}
           className={classes.rentCard}
         >

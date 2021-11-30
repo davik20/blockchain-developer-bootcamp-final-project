@@ -2,7 +2,7 @@ import VehicleLists from '../components/VehicleList/VehicleLists';
 import { useState, useEffect } from 'react';
 import { load } from 'dotenv';
 
-function Cars({ web3, rentContract, account }) {
+function Cars({ web3, rentContract, account, forceUpdate }) {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedvehicles, setLoadedvehicles] = useState([]);
 
@@ -49,7 +49,7 @@ function Cars({ web3, rentContract, account }) {
 
       init();
     }
-  }, [web3, rentContract, account]);
+  }, [web3, rentContract, account, forceUpdate]);
 
   if (isLoading) {
     return (
@@ -71,6 +71,7 @@ function Cars({ web3, rentContract, account }) {
           rentContract={rentContract}
           web3={web3}
           rentdetail={loadedvehicles}
+          forceUpdate={forceUpdate}
         />
       </div>
     );

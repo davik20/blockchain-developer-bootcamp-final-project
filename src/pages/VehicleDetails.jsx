@@ -4,8 +4,13 @@ import { useState, useEffect } from 'react';
 function VehicleDetails(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVehicle, setSelectedVehicle] = useState();
-  const { match, web3, rentContract, account } = props;
-
+  const { match, web3, rentContract, account} = props;
+  const [update, updateState] = useState(0)
+  const forceUpdate = ()=> {
+    const res =  Math.random() * 40000000
+    console.log(res)
+    updateState(res)
+   }
   useEffect(() => {
     if (web3 && rentContract && account) {
       const id = match.params.id;
@@ -21,7 +26,7 @@ function VehicleDetails(props) {
       };
       init();
     }
-  }, []);
+  }, [update]);
 
   if (isLoading) {
     return (
@@ -46,6 +51,7 @@ function VehicleDetails(props) {
         person={selectedVehicle.person}
         rentPerDay={selectedVehicle.rentPerDay}
         owner={selectedVehicle.owner}
+        forceUpdate={forceUpdate}
       />
     );
   } else {

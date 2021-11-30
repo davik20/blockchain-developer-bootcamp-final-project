@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import { useHistory } from 'react-router-dom';
 import useTransactionChecker from '../../customHooks/useTransactionChecker';
 import { toast } from 'react-toastify';
+
 function VehicleItem(props) {
-  const { rentContract, account, web3 } = props;
+
+  const { rentContract, account, web3 , forceUpdate} = props;
   const [hasRented, setHasRented] = useState(false);
   const [isRenting, setIsRenting] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
@@ -39,19 +41,22 @@ function VehicleItem(props) {
 
     try {
       const loading = toast.loading("Unlisting in progress")
-       rentContract.methods
+       await rentContract.methods
         .deleteRent(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast.dismiss(loading)
-          toast.success(
-            `Vehicle unlisted successfully`
-          )
+         
 
           
         });
 
+        toast.dismiss(loading)
+        toast.success(
+          `Vehicle unlisted successfully`
+        )
+
         setTimeout(()=> {
-          window.location = "/my-cars"
+          history.push(`/blockchain-developer-bootcamp-final-project/my-cars`)
+
         },3000)
 
       
@@ -63,7 +68,7 @@ function VehicleItem(props) {
   };
 
   const toWei = (amount) => {
-    console.log(web3.utils.toWei(amount, 'Ether'));
+    // console.log(web3.utils.toWei(amount, 'Ether'));
     return web3.utils.toWei(amount, 'Ether');
   };
   const toEther = (amount) => {
@@ -71,8 +76,8 @@ function VehicleItem(props) {
   };
   const rentVehicle = async (rentId) => {
     const { rentContract, account, owner, security, rentPerDay } = props;
-    console.log(props)
-    console.log(owner);
+    // console.log(props)
+    // console.log(owner);
     if (isOwner) {
       alert('You are the owner of this Car, You cannot rent it');
       return;
@@ -96,29 +101,31 @@ function VehicleItem(props) {
 
     try {
       let value = parseFloat(toEther(security)) + parseFloat(toEther(rentPerDay));
-      console.log(parseFloat(security));
-      console.log(value);
-      console.log(parseInt(security) + parseInt(rentPerDay))
+      // console.log(parseFloat(security));
+      // console.log(value);
+      // console.log(parseInt(security) + parseInt(rentPerDay))
       alert(`You are about to pay ${value.toFixed(4)}Eth to rent this car`);
-      const loading =  toast.loading("Vehicle return in progress")
+      const loading =  toast.loading("Vehicle rent in progress")
       await rentContract.methods
         .takeRent(rentId, 1)
         .send(
           { from: account, value: (parseInt(security) + parseInt(rentPerDay))},
           async (err, txHash) => {
-            toast.dismiss(loading);
-            toast.success(
-              `You have rented this vehicle`
-            );
-
-            
-          setTimeout(()=> {
-            window.location.reload()
-          },3000)
-
+           
             
           }
         );
+
+        toast.dismiss(loading);
+        toast.success(
+         "Vehicle returned successfully"
+          
+        );
+
+        setTimeout(()=> {
+          forceUpdate()
+          
+        },3000)
 
       //  await addTransaction(transactionHash , "/", "Vehicle has been rented Successfully")
     } catch (error) {
@@ -134,16 +141,18 @@ function VehicleItem(props) {
        await rentContract.methods
         .returnRent(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast.dismiss(loading)
-          toast.success(
-            `Vehicle return successful`
-          );
-
+         
          
         })
 
+        toast.dismiss(loading)
+        toast.success(
+          `Vehicle return successful`
+        );
+
         setTimeout(()=> {
-          window.location.reload()
+          forceUpdate()
+             
         },3000)
         
 
@@ -161,20 +170,17 @@ function VehicleItem(props) {
       await rentContract.methods
         .takeToMaintenance(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast.dismiss(loading)
-          toast.success(
-            `Car successfully taken to maintenance`
-          );
-
-
-            setTimeout(()=> {
-              window.location.reload()
-            },3000)
          
-
-       
-
         })
+        
+        setTimeout(()=> {
+          forceUpdate()
+        },3000)
+     
+        toast.dismiss(loading)
+        toast.success(
+          `Car successfully taken to maintenance`
+        );
     } catch (error) {
       console.log(error);
       alert('transaction failed');
@@ -185,18 +191,19 @@ function VehicleItem(props) {
     try {
 
      const loading =  toast.loading("Removing from maintenance")
-      rentContract.methods
+      await rentContract.methods
         .removeFromMaintenance(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast.dismiss(loading);
-          toast.success(
-            `Car successfully removed from maintenance`
-          );
-
+         
         });
 
+        toast.dismiss(loading);
+        toast.success(
+          `Car successfully removed from maintenance`
+        );
+
         setTimeout(()=> {
-          window.location.reload()
+          forceUpdate()
         },3000)
         
 
@@ -225,7 +232,7 @@ function VehicleItem(props) {
           {isOwner && (
             <>
               <Button
-                onClick={() => history.push(`/rent/${props.rentId}/edit`)}
+                onClick={() => history.push(`/blockchain-developer-bootcamp-final-project/rent/${props.rentId}/edit`)}
                 basic
                 color="teal"
                 content="Edit Details"

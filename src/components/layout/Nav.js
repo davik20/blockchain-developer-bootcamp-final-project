@@ -18,8 +18,8 @@ function Nav({ rentContract, web3, account }) {
   };
   return (
     <header className={classes.header}>
-      <Link to="/">
-        <div className={classes.logo}>V-RENT</div>
+      <Link to="/blockchain-developer-bootcamp-final-project/">
+        <div className={classes.logo}>V-RENTALS</div>
       </Link>
       <div className="d-block d-lg-none">
         <button
@@ -38,8 +38,8 @@ function Nav({ rentContract, web3, account }) {
         <ul>
           <li>
             <Link
-              className={location.pathname === '/' ? classes.isActive : ''}
-              to="/"
+              className={location.pathname === '/blockchain-developer-bootcamp-final-project/' ? classes.isActive : ''}
+              to="/blockchain-developer-bootcamp-final-project/"
             >
               Dashboard
             </Link>
@@ -47,9 +47,9 @@ function Nav({ rentContract, web3, account }) {
           <li>
             <Link
               className={
-                location.pathname === '/my-cars' ? classes.isActive : ''
+                location.pathname === '/blockchain-developer-bootcamp-final-project/my-cars' ? classes.isActive : ''
               }
-              to="/my-cars"
+              to="/blockchain-developer-bootcamp-final-project/my-cars"
             >
               My Cars
             </Link>
@@ -57,9 +57,9 @@ function Nav({ rentContract, web3, account }) {
           <li>
             <Link
               className={
-                location.pathname === '/new-rent' ? classes.isActive : ''
+                location.pathname === '/blockchain-developer-bootcamp-final-project/new-rent' ? classes.isActive : ''
               }
-              to="/new-rent"
+              to="/blockchain-developer-bootcamp-final-project/new-rent"
             >
               Add Rental
             </Link>

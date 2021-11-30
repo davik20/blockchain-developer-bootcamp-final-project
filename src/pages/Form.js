@@ -15,14 +15,14 @@ function Form({web3, rentContract, account}) {
      try {
       const loading =  toast.loading("Creating vehicle rental in progress")
    await rentContract.methods.createRent(name, description, toWei(security), toWei(rentPerDay)).send({from: account}, async(err, txHash)=> {
-     toast.dismiss(loading)
-      toast.success(`Rental created successfully`)
+     
         
 
     });
-
+    toast.dismiss(loading)
+    toast.success(`Rental created successfully`)
     setTimeout(()=> {
-      window.location = "/my-cars"
+      history.push(`/blockchain-developer-bootcamp-final-project/my-cars`)
     },3000)
      
 

@@ -109,13 +109,13 @@ function Dashboard({ web3, rentContract, account }) {
           </div>
 
           <div className="mt-3 md-mt-0">
-            <Link to="/new-rent">
+            <Link to="/blockchain-developer-bootcamp-final-project/new-rent">
               {' '}
               <button className="btn btn-info py-3 px-4 text-white me-2 mb-1">
                 Add Rental
               </button>
             </Link>
-            <Link to="/my-cars">
+            <Link to="/blockchain-developer-bootcamp-final-project/my-cars">
               <button className="btn btn-outline-danger py-3 mb-1">
                 Manage Vehicles
               </button>

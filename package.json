@@ -1,5 +1,6 @@
 {
-  "name": "vrent",
+  "homepage": "http:/davik20.github.io/blockchain-developer-bootcamp-final-project",
+  "name": "blockchain-developer-bootcamp-final-project",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

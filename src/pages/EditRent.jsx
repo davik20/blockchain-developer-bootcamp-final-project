@@ -3,11 +3,12 @@ import { Segment } from 'semantic-ui-react';
 import useTransactionChecker from '../customHooks/useTransactionChecker';
 import { toast } from 'react-toastify';
 import formClasses from '../components/VehicleList/VehicleLists.module.css';
+import {useHistory}  from 'react-router-dom'
 
 function EditRent(props) {
   const [addTransaction] = useTransactionChecker();
   const { match, web3, rentContract, account } = props;
-
+  const history = useHistory()
   const vehicleName = useRef();
   const vehicleSecurity = useRef();
   const vehicleDesctiption = useRef();
@@ -20,7 +21,7 @@ function EditRent(props) {
   });
 
   const fromWei = (amount) => {
-    console.log(web3.utils.fromWei(amount, 'Ether'));
+    // console.log(web3.utils.fromWei(amount, 'Ether'));
     return web3.utils.fromWei(amount, 'Ether');
   };
   const toWei = (amount) => {
@@ -61,16 +62,18 @@ function EditRent(props) {
           toWei(form.rentPerDay)
         )
         .send({ from: account }, async (err, txHash) => {
-          toast.dismiss(loading)
-          toast.success(
-            `Rental updated successfully`
-          );
-
-         
+        
         });
 
+        toast.dismiss(loading)
+        toast.success(
+          `Rental updated successfully`
+        );
+
+       
+
         setTimeout(()=> {
-          window.location = "/my-cars"
+          history.push(`/blockchain-developer-bootcamp-final-project/my-cars`)
         },3000)
     } catch (error) {
       console.log(error);
