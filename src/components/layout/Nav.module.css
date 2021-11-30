@@ -4,14 +4,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #05299e;
-  padding: 0 10%;
 }
 
 .logo {
   font-size: 2rem;
   color: white;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .header ul {
@@ -23,17 +22,60 @@
 }
 
 .header li {
-  margin-left: 3rem;
+  margin-left: 2.5rem;
 }
 
 .header a {
   text-decoration: none;
-  font-size: 1.5rem;
-  color: #fcb8d2;
+  font-size: 1.2rem;
+  /* color: #fcb8d2; */
+  color: #fff;
 }
 
 .header a:hover,
 .header a:active,
 .header a.active {
-  color: white;
+  color: #00a7c6;
+}
+.header a.isActive {
+  color: #00a7c6;
+}
+@media (max-width: 992px) {
+  .navBar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: #1b1b1b;
+    z-index: 2;
+    height: 50vh;
+    padding: 10px 40px;
+    width: 100%;
+    transform: translateX(100%);
+    transition: transform 0.5s ease;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  .navBar.show {
+    transform: translateX(0);
+  }
+  .header ul {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin: 2rem auto;
+  }
+  .header ul li {
+    text-align: center;
+    margin-left: 0;
+    margin-top: 1rem;
+  }
+  .header ul li a {
+    font-weight: bold;
+  }
+  .toggleBtn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 10;
+  }
 }

@@ -4,31 +4,59 @@ import Dashboard from './pages/Dashboard';
 import Cars from './pages/Cars';
 import Layout from './components/layout/Layout';
 import EditRent from './pages/EditRent';
+import VehicleDetails from './pages/VehicleDetails';
 
-function Main({rentContract, web3, account}) {
+function Main({ rentContract, web3, account }) {
   return (
     <Layout rentContract={rentContract} web3={web3} account={account}>
       <Switch>
-        <Route path='/' exact>
-        <Dashboard rentContract={rentContract} web3={web3} account={account}/>
+        <Route path="/" exact>
+          <Dashboard
+            rentContract={rentContract}
+            web3={web3}
+            account={account}
+          />
         </Route>
-
-        <Route path='/rent/:id' render={(props)=> (
-          <EditRent {...props} rentContract={rentContract} account={account} web3={web3}  />
-        )}
+        <Route
+          path="/detail/:id"
+          render={(props) => (
+            <VehicleDetails
+              {...props}
+              rentContract={rentContract}
+              web3={web3}
+              account={account}
+            />
+          )}
         />
-        <Route path='/my-cars' render={(props)=> (
-          <Cars {...props} rentContract={rentContract} account={account} web3={web3}  />
-        )}
+        <Route
+          path="/rent/:id"
+          render={(props) => (
+            <EditRent
+              {...props}
+              rentContract={rentContract}
+              account={account}
+              web3={web3}
+            />
+          )}
+        />
+        <Route
+          path="/my-cars"
+          render={(props) => (
+            <Cars
+              {...props}
+              rentContract={rentContract}
+              account={account}
+              web3={web3}
+            />
+          )}
         />
 
-        
-        <Route path='/new-rent'>
-          <Form rentContract={rentContract} account={account} web3={web3}  />
+        <Route path="/new-rent">
+          <Form rentContract={rentContract} account={account} web3={web3} />
         </Route>
       </Switch>
     </Layout>
-  )
+  );
 }
 
 export default Main;

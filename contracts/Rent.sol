@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.5.0;
+pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
-contract Rent {
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+
+contract Rent is Ownable {
     struct RentDetail {
         uint256 rentId; // id of Vehicle
         string name; // short name of Vehicle
@@ -45,16 +47,27 @@ contract Rent {
     mapping(address => bool) public isRenting;
     mapping(address => uint256) public rented;
     mapping(uint256 => address) rentedBy;
-    RentDetail[] allRents;
+    RentDetail[] public allRents;
     mapping(uint256 => RentDetail) public rentDetails;
 
-    modifier permission() {
-        require(msg.sender == manager);
+
+    modifier rentExists( uint id){
+       RentDetail storage _rentDetail = rentDetails[id];
+        require(_rentDetail.exists == true, "This does not exist");
         _;
     }
 
-    constructor() public {
-        manager = msg.sender;
+    modifier isRentOwner(uint id){
+         RentDetail storage _rentDetail = rentDetails[id];
+         require(
+            _rentDetail.owner == msg.sender,
+            "You are not the creator of this Rent"
+        );
+        _;
+    }
+
+    constructor()  {
+    
         rentCount = 0;
     }
 
@@ -82,8 +95,8 @@ contract Rent {
             availability,
             popularity,
             _rentPerDay,
-            address(0),
-            msg.sender,
+             payable(address(0)),
+             payable(msg.sender),
             true
         );
         allRents.push(rentDetails[rentCount]);
@@ -93,7 +106,7 @@ contract Rent {
             _security,
             _description,
             _rentPerDay,
-            msg.sender
+            payable(msg.sender)
         );
     }
 
@@ -103,12 +116,9 @@ contract Rent {
         uint256 newsecurity,
         string memory newDescription,
         uint256 newrentPerDay
-    ) public {
+    ) public rentExists(_id) isRentOwner(_id) {
         RentDetail storage _rentDetail = rentDetails[_id];
-        require(
-            _rentDetail.owner == msg.sender,
-            "You are not the owner of this car"
-        );
+       
         _rentDetail.name = newname;
         _rentDetail.security = newsecurity;
         _rentDetail.description = newDescription;
@@ -128,13 +138,13 @@ contract Rent {
         }
     }
 
-    function takeOnMaintenance(uint256 _id) public permission {
+    function takeOnMaintenance(uint256 _id) public onlyOwner  rentExists(_id){
         RentDetail storage _rentDetail = rentDetails[_id];
         _rentDetail.availability = -1;
         rentDetails[_id] = _rentDetail;
     }
 
-    function returnFromMaintenance(uint256 _id) public permission {
+    function returnFromMaintenance(uint256 _id) public onlyOwner rentExists(_id) {
         RentDetail storage _rentDetail = rentDetails[_id];
         _rentDetail.availability = 1;
         rentDetails[_id] = _rentDetail;
@@ -163,7 +173,7 @@ contract Rent {
             _rentDetail.rentPerDay +
             _rentDetail.security;
         require(msg.value >= total, "The amount does not cover fees");
-        _rentDetail.person = msg.sender;
+        _rentDetail.person = payable(msg.sender);
         _rentDetail.popularity++;
         _rentDetail.availability = 0;
         pastRents[_rentDetail.rentId].push(msg.sender);
@@ -175,7 +185,7 @@ contract Rent {
 
         // transfer funds
         uint256 toTransfer = (msg.value - _rentDetail.security);
-        address(_owner).transfer(toTransfer);
+        payable(_owner).transfer(toTransfer);
 
         // update mapping
         rentDetails[_id] = _rentDetail;
@@ -184,7 +194,7 @@ contract Rent {
         for (uint256 i; i < allRents.length; i++) {
             if (allRents[i].rentId == _id) {
                 allRents[i].availability = 0;
-                allRents[i].person = msg.sender;
+                allRents[i].person = payable(msg.sender);
                 allRents[i].popularity = allRents[i].popularity + 1;
             }
         }
@@ -194,13 +204,12 @@ contract Rent {
             _rentDetail.security,
             _rentDetail.description,
             _rentDetail.rentPerDay,
-            msg.sender
+            payable(msg.sender)
         );
     }
 
-    function returnRent(uint256 _id) public payable {
+    function returnRent(uint256 _id)  public payable rentExists(_id) {
         RentDetail storage _rentDetail = rentDetails[_id];
-        require(_rentDetail.exists == true, "This does not exist");
         address payable _owner = _rentDetail.owner;
         address payable _person = _rentDetail.person;
 
@@ -208,7 +217,7 @@ contract Rent {
         _person.transfer(_rentDetail.security);
 
         _rentDetail.availability = 1;
-        _rentDetail.person = address(0);
+        _rentDetail.person = payable(address(0));
 
         // update
         timeOfRent[_id] = 0;
@@ -222,7 +231,7 @@ contract Rent {
         for (uint256 i; i < allRents.length; i++) {
             if (allRents[i].rentId == _id) {
                 allRents[i].availability = 1;
-                allRents[i].person = address(0);
+                allRents[i].person = payable(address(0));
             }
         }
     }
@@ -232,13 +241,9 @@ contract Rent {
         return pastRents[_id][pastRents[_id].length - 1];
     }
 
-    function deleteRent(uint256 _id) public {
+    function deleteRent(uint256 _id) public rentExists(_id) isRentOwner(_id)  {
         RentDetail storage _rentDetail = rentDetails[_id];
-        require(_rentDetail.exists == true, "This does not exist");
-        require(
-            _rentDetail.owner == msg.sender,
-            "You are not the creator of this Rent"
-        );
+      
         delete rentDetails[_id];
         _rentDetail.exists = false;
         rentCount--;
@@ -261,13 +266,9 @@ contract Rent {
         return rentDetails[_id];
     }
 
-    function takeToMaintenance(uint256 _id) public {
+    function takeToMaintenance(uint256 _id) public rentExists(_id) isRentOwner(_id) {
         RentDetail storage _rentDetail = rentDetails[_id];
-        require(_rentDetail.exists == true, "This does not exist");
-        require(
-            _rentDetail.owner == msg.sender,
-            "You are not the creator of this Rent"
-        );
+       
 
         _rentDetail.availability = -1;
         // update mapping
@@ -281,15 +282,11 @@ contract Rent {
         }
     }
 
-    function removeFromMaintenance(uint256 _id) public {
-        RentDetail storage _rentDetail = rentDetails[_id];
-        require(_rentDetail.exists == true, "This does not exist");
-        require(
-            _rentDetail.owner == msg.sender,
-            "You are not the creator of this Rent"
-        );
+    function removeFromMaintenance(uint256 _id) public rentExists(_id) isRentOwner(_id) {
+        RentDetail memory _rentDetail = rentDetails[_id];
+        
 
-        _rentDetail.availability = -1;
+        _rentDetail.availability = 1;
         // update mapping
         rentDetails[_id] = _rentDetail;
 
