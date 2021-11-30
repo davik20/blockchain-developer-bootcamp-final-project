@@ -25,16 +25,17 @@ function App() {
    updateState(res)
   }
   useEffect(()=> {
-    window.ethereum.request({ method: 'eth_chainId' }).then(chainId => {
-      if(chainId === "0x3" || chainId === "0x539"){
-        setChainId(chainId)
-      }else {
-        setChainId(undefined)
-      }
-  
-    })
-        
-   
+    if(window.ethereum){
+      window.ethereum.request({ method: 'eth_chainId' }).then(chainId => {
+        if(chainId === "0x3" || chainId === "0x539"){
+          setChainId(chainId)
+        }else {
+          setChainId(undefined)
+        }
+    
+      })
+
+
     window.ethereum.on('chainChanged', (chainId) => {
       console.log(chainId)
       if(chainId === "0x3" || chainId === "0x539"){
@@ -43,11 +44,17 @@ function App() {
         setChainId(undefined)
       }
       
-    }, []);
+    });
 
     window.ethereum.on('accountsChanged', (accounts) => {
       window.location = "/blockchain-developer-bootcamp-final-project/"
     });
+    }
+   
+      
+   
+
+   
    }, [])
 
   useEffect(() => {
@@ -133,7 +140,7 @@ function App() {
           }}
         >
           {' '}
-          {error}{' '}
+         
         </div>
       )}
     </div>

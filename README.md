@@ -51,6 +51,5 @@ using port: 7457
 
 
 #  My public Ethereum Adress
-0x7A8005dE01ed4EEcA9324E2C34fdaaE1331261a6
 
 
