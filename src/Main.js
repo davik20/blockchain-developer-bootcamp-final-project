@@ -5,8 +5,10 @@ import Cars from './pages/Cars';
 import Layout from './components/layout/Layout';
 import EditRent from './pages/EditRent';
 import VehicleDetails from './pages/VehicleDetails';
+import { useEffect } from 'react';
 
 function Main({ rentContract, web3, account }) {
+
   return (
     <Layout rentContract={rentContract} web3={web3} account={account}>
       <Switch>

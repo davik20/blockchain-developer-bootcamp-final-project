@@ -32,7 +32,7 @@ contract("Rent", function ( accounts ) {
   });
 
   it("can create a rentable car", async()=> {
-     await instance.createRent("Honda Accord", "2008, Sedan", toWei("0.03"), toWei("0.2"), {
+     await instance.createRent("Honda Accord", "2008, Sedatn", toWei("0.03"), toWei("0.2"), {
        from: Sady
      })
 

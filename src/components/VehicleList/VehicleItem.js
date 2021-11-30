@@ -38,19 +38,23 @@ function VehicleItem(props) {
     const { rentContract, account } = props;
 
     try {
-      const transactionHash = rentContract.methods
+      const loading = toast.loading("Unlisting in progress")
+       rentContract.methods
         .deleteRent(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast(
-            `Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`
-          );
+          toast.dismiss(loading)
+          toast.success(
+            `Vehicle unlisted successfully`
+          )
 
-          alert(
-            `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
-          );
+          
         });
 
-      // await addTransaction(transactionHash, "/my-cars", "Rent Deleted Successfully")
+        setTimeout(()=> {
+          window.location = "/my-cars"
+        },3000)
+
+      
     } catch (error) {
       // alert(error.message)
       console.log(error);
@@ -96,18 +100,23 @@ function VehicleItem(props) {
       console.log(value);
       console.log(parseInt(security) + parseInt(rentPerDay))
       alert(`You are about to pay ${value.toFixed(4)}Eth to rent this car`);
-      const transactionHash = await rentContract.methods
+      const loading =  toast.loading("Vehicle return in progress")
+      await rentContract.methods
         .takeRent(rentId, 1)
         .send(
           { from: account, value: (parseInt(security) + parseInt(rentPerDay))},
           async (err, txHash) => {
-            toast(
-              `Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`
+            toast.dismiss(loading);
+            toast.success(
+              `You have rented this vehicle`
             );
 
-            alert(
-              `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
-            );
+            
+          setTimeout(()=> {
+            window.location.reload()
+          },3000)
+
+            
           }
         );
 
@@ -121,17 +130,22 @@ function VehicleItem(props) {
   const returnVehicle = async (rentId) => {
     const { rentContract, account, owner, security, rentPerDay } = props;
     try {
-      const transactionHash = await rentContract.methods
+      const loading =  toast.loading("Vehicle return in progress")
+       await rentContract.methods
         .returnRent(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast(
-            `Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`
+          toast.dismiss(loading)
+          toast.success(
+            `Vehicle return successful`
           );
 
-          alert(
-            `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
-          );
-        });
+         
+        })
+
+        setTimeout(()=> {
+          window.location.reload()
+        },3000)
+        
 
       // await addTransaction(transactionHash, "/", 'Vehicle returned successfully')
     } catch (error) {
@@ -143,19 +157,24 @@ function VehicleItem(props) {
   const takeToMaintain = async (rentId) => {
     const { rentContract, account, owner, security, rentPerDay } = props;
     try {
+      const loading =  toast.loading("Taking to maintenance")
       await rentContract.methods
         .takeToMaintenance(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast(
-            `Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`
+          toast.dismiss(loading)
+          toast.success(
+            `Car successfully taken to maintenance`
           );
 
-          alert(
-            `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
-          );
 
-          //  await addTransaction(txHash, "/my-cars", 'vehicle taken for Maintenance')
-        });
+            setTimeout(()=> {
+              window.location.reload()
+            },3000)
+         
+
+       
+
+        })
     } catch (error) {
       console.log(error);
       alert('transaction failed');
@@ -164,19 +183,24 @@ function VehicleItem(props) {
   const removeFromMaintain = async (rentId) => {
     const { rentContract, account, owner, security, rentPerDay } = props;
     try {
+
+     const loading =  toast.loading("Removing from maintenance")
       rentContract.methods
         .removeFromMaintenance(rentId)
         .send({ from: account }, async (err, txHash) => {
-          toast(
-            `Transaction in progress Please Wait https://ropsten.etherscan.io/tx/${txHash}`
+          toast.dismiss(loading);
+          toast.success(
+            `Car successfully removed from maintenance`
           );
 
-          alert(
-            `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
-          );
         });
 
-      // await addTransaction(transactionHash, '/my-cars', 'vehicle removed from Maintenance')
+        setTimeout(()=> {
+          window.location.reload()
+        },3000)
+        
+
+
     } catch (error) {
       console.log(error);
       alert('transaction failed');

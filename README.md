@@ -1,3 +1,10 @@
+
+# Installation
+- npm install
+- npm start
+
+
+
 # This is a Car Rental Application:
 
 - Car owners can List cars for rent and users can rent them while meeting the requirements set buy the owner (securities deposit and rent fee)
@@ -17,5 +24,8 @@
 
 
 
-# Ethereum Account
+#  My public Ethereum Adress
 0x7A8005dE01ed4EEcA9324E2C34fdaaE1331261a6
+
+
+#  Application link

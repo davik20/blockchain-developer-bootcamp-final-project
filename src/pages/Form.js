@@ -13,14 +13,19 @@ function Form({web3, rentContract, account}) {
 
   async function createRent({name, description, security, rentPerDay}) {
      try {
-     const tx =   rentContract.methods.createRent(name, description, toWei(security), toWei(rentPerDay)).send({from: account}, async(err, txHash)=> {
-      toast(`Transaction in progress Please wait https://ropsten.etherscan.io/tx/${txHash}`)
+      const loading =  toast.loading("Creating vehicle rental in progress")
+   await rentContract.methods.createRent(name, description, toWei(security), toWei(rentPerDay)).send({from: account}, async(err, txHash)=> {
+     toast.dismiss(loading)
+      toast.success(`Rental created successfully`)
         
-        alert(`Transaction in progress, Please Wait https://ropsten.etherscan.io/tx/${txHash}`)
+
     });
 
+    setTimeout(()=> {
+      window.location = "/my-cars"
+    },3000)
      
-    //  await  addTransaction(tx, "/my-cars", "Rent Created Successfully")
+
      
      } catch (error) {
        console.log(error)

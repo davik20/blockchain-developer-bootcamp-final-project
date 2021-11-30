@@ -13,6 +13,20 @@ function App() {
   const [account, setAccount] = useState(null);
   const [error, setError] = useState(false);
   const [addTransaction] = useTransactionChecker();
+  const [chainId, setChainId] = useState(null)
+
+
+  useEffect(()=> {
+    window.ethereum.on('chainChanged', (chainId) => {
+      console.log(chainId)
+      setChainId(chainId)
+      
+    }, []);
+
+    window.ethereum.on('accountsChanged', (accounts) => {
+      window.location.reload()
+    });
+   }, [])
 
   useEffect(() => {
     const init = async () => {
@@ -41,7 +55,7 @@ function App() {
       } catch (error) {
         console.log(error);
         setError(
-          'Please use a metamask enabled browser and connect with the ropsten testnet  '
+          'Please use a metamask enabled browser and connect with the ropsten testnet'
         );
       }
     };
@@ -53,7 +67,7 @@ function App() {
       {rentContract && web3 && account && (
         <React.Fragment>
           <ToastContainer />
-          {window.innerWidth > 500 ? (
+          {chainId === "0x3" ? (
             <Main web3={web3} account={account} rentContract={rentContract} />
           ) : (
             <div

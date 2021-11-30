@@ -210,7 +210,7 @@ contract Rent is Ownable {
 
     function returnRent(uint256 _id)  public payable rentExists(_id) {
         RentDetail storage _rentDetail = rentDetails[_id];
-        address payable _owner = _rentDetail.owner;
+
         address payable _person = _rentDetail.person;
 
         // transfer security back to leaser

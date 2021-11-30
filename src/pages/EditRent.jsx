@@ -51,7 +51,8 @@ function EditRent(props) {
     const id = match.params.id;
 
     try {
-      const transactionHash = rentContract.methods
+      const loading = toast.loading("Updating in progress")
+     await  rentContract.methods
         .editDetails(
           id,
           form.name,
@@ -60,16 +61,17 @@ function EditRent(props) {
           toWei(form.rentPerDay)
         )
         .send({ from: account }, async (err, txHash) => {
-          toast(
-            `Transaction in progress https://ropsten.etherscan.io/tx/${txHash}`
+          toast.dismiss(loading)
+          toast.success(
+            `Rental updated successfully`
           );
 
-          alert(
-            `Transaction in progress, Please wait https://ropsten.etherscan.io/tx/${txHash}`
-          );
+         
         });
 
-      // await addTransaction(transactionHash, '/', 'rent updated successfully')
+        setTimeout(()=> {
+          window.location = "/my-cars"
+        },3000)
     } catch (error) {
       console.log(error);
       alert('Transaction Failed');
