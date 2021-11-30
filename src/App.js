@@ -83,8 +83,14 @@ function App() {
         );
       }
     };
-
-    init();
+    if(window.ethereum){
+      init();
+    }else {
+      setError(
+        'Please use a metamask enabled browser and connect with the ropsten testnet'
+      );
+    }
+  
   }, [chainId]);
   return (
     <div>
