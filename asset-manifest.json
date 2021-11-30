@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/css/main.6e42c28c.chunk.css",
+    "main.js": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/main.bd085fc5.chunk.js",
+    "main.js.map": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/main.bd085fc5.chunk.js.map",
+    "runtime-main.js": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/runtime-main.4cc5584f.js",
+    "runtime-main.js.map": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/runtime-main.4cc5584f.js.map",
+    "static/css/2.1807c5a1.chunk.css": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/css/2.1807c5a1.chunk.css",
+    "static/js/2.fe2da44a.chunk.js": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/2.fe2da44a.chunk.js",
+    "static/js/2.fe2da44a.chunk.js.map": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/2.fe2da44a.chunk.js.map",
+    "index.html": "/davik20.github.io/blockchain-developer-bootcamp-final-project/index.html",
+    "static/css/2.1807c5a1.chunk.css.map": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/css/2.1807c5a1.chunk.css.map",
+    "static/css/main.6e42c28c.chunk.css.map": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/css/main.6e42c28c.chunk.css.map",
+    "static/js/2.fe2da44a.chunk.js.LICENSE.txt": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/js/2.fe2da44a.chunk.js.LICENSE.txt",
+    "static/media/semantic.min.css": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/media/outline-icons.ddae9b1b.woff",
+    "static/media/electric-vehicle.6fc02f26.png": "/davik20.github.io/blockchain-developer-bootcamp-final-project/static/media/electric-vehicle.6fc02f26.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.4cc5584f.js",
+    "static/css/2.1807c5a1.chunk.css",
+    "static/js/2.fe2da44a.chunk.js",
+    "static/css/main.6e42c28c.chunk.css",
+    "static/js/main.bd085fc5.chunk.js"
+  ]
+}
