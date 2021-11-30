@@ -1,8 +1,8 @@
 #  Deployed Application link
-http://localhost:3000/blockchain-developer-bootcamp-final-project
+https://davik20.github.io/blockchain-developer-bootcamp-final-project/
 
 # Screen Cast recording 
-https://youtu.be/9sqT5n8PIS4
+https://youtu.be/9sqT5n8PIS4ƒ
 
 # Directory Structure
 
